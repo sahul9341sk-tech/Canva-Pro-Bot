@@ -108,4 +108,15 @@ app.add_handler(CallbackQueryHandler(plan_selected, pattern="^(149|199|299)$"))
 app.add_handler(CallbackQueryHandler(admin_action, pattern="^(approve|reject)_"))
 app.add_handler(MessageHandler(filters.PHOTO, receive_screenshot))
 
-app.run_polling()
+import asyncio
+
+async def main():
+    await app.initialize()
+    await app.start()
+    await app.updater.start_polling()
+
+    while True:
+        await asyncio.sleep(3600)
+
+if __name__ == "__main__":
+    asyncio.run(main())
